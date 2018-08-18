@@ -19,13 +19,38 @@
 
     <main>
 
-        <div id="inputTela" class="center-align">
+        <div id="inputTela" class="center-align container">
             <br><br><br>
             <div class="row">
-                <div class="col s4 offset-s4 input-field">
+                <div class="col s12 l4 offset-l4 input-field">
+                    <i class="material-icons prefix">change_history</i>
                     <input id="towerLeng" type="number" class="validate" >
                     <label for="towerLeng">Digite o tamanho da torre</label>
-                    <a class="waves-effect waves-light red darken-4 btn"><i class="material-icons left">add_circle_outline</i>Jogar</a>
+                    <br><br>
+                    <a class="waves-effect waves-light red darken-4 btn" onclick="startGame()"><i class="material-icons left">add_circle_outline</i>Jogar</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="gameTela" class="container" style="display: none;">
+            <br><br><br>
+            <div class="row">
+                <div class="col s4 z-depth-3">
+                    <div id="Tower1" class="card red accent-1 center-align">
+                       <!-- Tower 1 -->
+                    </div>
+                </div>
+
+                <div class="col s4 z-depth-3">
+                    <div id="Tower2" class="card red accent-1 center-align">
+                        <!-- Tower 2 -->
+                    </div>
+                </div>
+
+                <div class="col s4 z-depth-3">
+                    <div id="Tower3" class="card red accent-1 center-align">
+                        <!-- Tower 3 -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -39,6 +64,7 @@
 
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/game.js"></script>
   </body>
 </html>
       
