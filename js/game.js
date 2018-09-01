@@ -2,13 +2,17 @@ var t1 = [];
 var t2 = [];
 var t3 = [];
 
+
+//indica qual torre vai estar selecionada
+var selection = -1;
+
 function startGame() {
     // pega o tamanho da torre
     var tam = $("#towerLeng").val();
-    
+
     // verifica se o valor digitado é 0
     if (!tam) {
-        M.toast({html: "Digite o tamanho da torre!"})
+        M.toast({ html: "Digite o tamanho da torre!" })
     }
 
     else {
@@ -29,10 +33,12 @@ function startGame() {
         // 
         $("#inputTela").hide();
         $("#gameTela").show();
+        selection = -1;
         RENDER([t1, t2, t3]);
     }
 }
 
+//renderiza a matriz de torres
 function RENDER(towers) {
     for (var index = 0; index < 3; index++) {
 
@@ -45,7 +51,7 @@ function RENDER(towers) {
             for (var j = 0; j < towers[index][i]; j++) {
                 preGrap += "&lhblk;";
             }
-            
+
             prop.push(preGrap + "<br>");
 
         }
@@ -56,8 +62,44 @@ function RENDER(towers) {
             rendered += prop[i];
         }
 
-        $("#Tower"+(index+1)).html(rendered);
+        $("#Tower" + (index + 1)).html(rendered);
 
-        
     }
 }
+
+//faz a seleção das torres e indica quais vão mover
+function selec(elem, number) {
+    if (selection == -1) {
+        $(elem).addClass("green darken-1");
+        selection = number;
+    }
+    else if (selection == number) {
+        M.toast({html: `<strong>Torre ${number+1} descelecionada</strong>`})
+
+        $(elem).removeClass("green darken-1");
+        selection = -1;
+    }
+    else {
+        mover(selection, number);
+
+    }
+}
+
+//move as unidades da torre
+function mover(tOut, tIn) {
+    console.log(`de ${tOut} para ${tIn}`);
+}
+
+
+//eventos de click
+$("#subT1").click(function() {
+    selec(this, 0);
+})
+
+$("#subT2").click(function() {
+    selec(this, 1);
+})
+
+$("#subT3").click(function() {
+    selec(this, 2);
+})
