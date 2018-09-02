@@ -46,8 +46,8 @@ function RENDER(towers) {
 
         var prop = [];
 
+        let dif = tam - towers[index].length
         
-
         for (var i = 0; i < towers[index].length; i++) {
 
             var preGrap = "";
@@ -65,6 +65,11 @@ function RENDER(towers) {
         for (var i = 0; i < prop.length; i++) {
             rendered += prop[i];
         }
+
+        for (var i = 0; i < dif; i++) {
+            rendered = "<br>" + rendered;
+        }
+        
 
         $("#Tower" + (index + 1)).html(rendered);
 
@@ -92,11 +97,7 @@ function selec(elem, number) {
 //move as unidades da torre
 function mover(tOut, tIn) {
 
-    console.log(`de ${tOut} para ${tIn}`);
-
     let towers = [t1, t2, t3];
-
-    console.log(towers[tOut], towers[tIn]);
 
     let prop = towers[tOut].shift();
     towers[tIn].reverse().push(prop);
