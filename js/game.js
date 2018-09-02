@@ -1,3 +1,4 @@
+var tam
 var t1 = [];
 var t2 = [];
 var t3 = [];
@@ -8,7 +9,7 @@ var selection = -1;
 
 function startGame() {
     // pega o tamanho da torre
-    var tam = $("#towerLeng").val();
+    tam = $("#towerLeng").val();
 
     // verifica se o valor digitado é 0
     if (!tam) {
@@ -18,6 +19,7 @@ function startGame() {
     else {
         // Gera os valores da torre
         var auxTG = 0;
+
         for (var i = 0; i < tam; i++) {
             if (i < 1) {
                 auxTG = 1;
@@ -27,8 +29,8 @@ function startGame() {
                 auxTG += 2;
                 t1.push(auxTG);
             }
-            t2.push(0);
-            t3.push(0);
+            // t2.push(0);
+            // t3.push(0);
         }
         // 
         $("#inputTela").hide();
@@ -43,6 +45,8 @@ function RENDER(towers) {
     for (var index = 0; index < 3; index++) {
 
         var prop = [];
+
+        
 
         for (var i = 0; i < towers[index].length; i++) {
 
@@ -81,15 +85,26 @@ function selec(elem, number) {
     }
     else {
         mover(selection, number);
-
+        RENDER([t1, t2, t3])
     }
 }
 
 //move as unidades da torre
 function mover(tOut, tIn) {
-    console.log(`de ${tOut} para ${tIn}`);
-}
 
+    console.log(`de ${tOut} para ${tIn}`);
+
+    let towers = [t1, t2, t3];
+
+    console.log(towers[tOut], towers[tIn]);
+
+    let prop = towers[tOut].shift();
+    towers[tIn].reverse().push(prop);
+    towers[tIn].reverse()    
+    
+    
+}
+ 
 
 //eventos de click
 $("#subT1").click(function() {
