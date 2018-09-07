@@ -3,6 +3,13 @@ var t1 = [];
 var t2 = [];
 var t3 = [];
 
+var movContG = 0;
+
+var mov = 0;
+
+var conterV;
+
+var s = 0, m = 0;
 
 //indica qual torre vai estar selecionada
 var selection = -1;
@@ -12,7 +19,7 @@ function startGame() {
     tam = $("#towerLeng").val();
 
     // verifica se o valor digitado é 0
-    if (!tam) {
+    if (!tam || tam == 0) {
         M.toast({ html: "Digite o tamanho da torre!" })
     }
 
@@ -33,10 +40,15 @@ function startGame() {
             // t3.push(0);
         }
         // 
-        $("#inputTela").hide();
-        $("#gameTela").show();
+        $("#inputTela").hide("slow");
+        $(".page-footer").hide("slow");
+        $("#gameTela").show("slow");
+        $("#backBtn").show("slow");
         selection = -1;
+        conterV = setInterval(conter, 1000);
         RENDER([t1, t2, t3]);
+
+        M.toast({ html: `Para resolver essa torre você irá preicar do minimo de ${Math.pow(2, tam) - 1} movimentos` })
     }
 }
 
@@ -47,7 +59,7 @@ function RENDER(towers) {
         var prop = [];
 
         let dif = tam - towers[index].length
-        
+
         for (var i = 0; i < towers[index].length; i++) {
 
             var preGrap = "";
@@ -69,10 +81,10 @@ function RENDER(towers) {
         for (var i = 0; i < dif; i++) {
             rendered = "<br>" + rendered;
         }
-        
+
 
         $("#Tower" + (index + 1)).html(rendered);
-
+        $("#movConter").html(`Movimentos: ${mov}`);
     }
 }
 
@@ -83,13 +95,38 @@ function selec(elem, number) {
         selection = number;
     }
     else if (selection == number) {
-        M.toast({html: `<strong>Torre ${number+1} descelecionada</strong>`})
-
         $(elem).removeClass("green darken-1");
         selection = -1;
+        movContG = 0;
+
     }
     else {
-        mover(selection, number);
+        let towers = [t1, t2, t3];
+
+        let Tselec = towers[selection];
+        let Tout = towers[number];
+
+
+        if ((Tselec[0] < Tout[0] || !Tout[0]) && Tselec[0]) {
+            mover(selection, number);
+            movContG++;
+        }
+        else {
+            M.toast({ html: "Não podes colocar uma peça maior em cima de uma menor" })
+        }
+
+
+
+
+        let tIndex = towers[selection].length - 1;
+
+        if (tIndex == -1 || movContG == 2) {
+            $(`#subT${selection + 1}`).removeClass("green darken-1")
+            selection = -1;
+            movContG = 0;
+        }
+
+
         RENDER([t1, t2, t3])
     }
 }
@@ -97,25 +134,113 @@ function selec(elem, number) {
 //move as unidades da torre
 function mover(tOut, tIn) {
 
+    mov++;
+
     let towers = [t1, t2, t3];
 
     let prop = towers[tOut].shift();
     towers[tIn].reverse().push(prop);
-    towers[tIn].reverse()    
-    
-    
+    towers[tIn].reverse()
+
+
 }
- 
+
+function checkComplete() {
+    if (t3[0] == 1 && t3.length == tam) {
+        M.toast({
+            html: `Parabains, você ganhou!<br>
+        Em ${mov} movimentos em ${m} minutos e ${s} segundos`
+        })
+        t1 = [];
+        t2 = [];
+        t3 = [];
+        mov = 0;
+        s = 0;
+        m = 0;
+        $("#inputTela").show("slow");
+        $(".page-footer").show("slow");
+        $("#gameTela").hide("slow");
+        $("#backBtn").hide("slow");
+        clearInterval(conterV);
+    }
+
+}
+
+function endGame() {
+    t1 = [];
+    t2 = [];
+    t3 = [];
+    mov = 0;
+    s = 0;
+    m = 0;
+    clearInterval(conterV);
+    $("#inputTela").show("slow");
+    $(".page-footer").show("slow");
+    $("#gameTela").hide("slow");
+    $("#backBtn").hide("slow");
+    M.Toast.dismissAll();
+}
+
+function conter() {
+    s++;
+    if (s == 60) {
+        m++;
+        s = 0
+    }
+
+    $("#tempConter").html(`Tempo: ${m}:${s}`)
+    console.log("a");
+    
+
+}
 
 //eventos de click
-$("#subT1").click(function() {
-    selec(this, 0);
+$("#subT1").click(function () {
+    if (!t1.length && selection == -1) {
+        M.toast({ html: "Voce não pode selecionar uma torre vazia" })
+    }
+    else {
+        selec(this, 0);
+        checkComplete();
+
+    }
 })
 
-$("#subT2").click(function() {
-    selec(this, 1);
+$("#subT2").click(function () {
+    if (!t2.length && selection == -1) {
+        M.toast({ html: "Voce não pode selecionar uma torre vazia" })
+    }
+    else {
+        selec(this, 1);
+        checkComplete();
+
+    }
 })
 
-$("#subT3").click(function() {
-    selec(this, 2);
+$("#subT3").click(function () {
+    if (!t3.length && selection == -1) {
+        M.toast({ html: "Voce não pode selecionar uma torre vazia" })
+    }
+    else {
+        selec(this, 2);
+        checkComplete();
+    }
+})
+
+
+$("#inputTela").keypress(function (key) {
+    if (key.keyCode == 13) startGame();
+});
+
+
+
+$("#gameTela").contextmenu(function () {
+    selection = -1;
+    $(`#subT1`).removeClass("green darken-1")
+    $(`#subT2`).removeClass("green darken-1")
+    $(`#subT3`).removeClass("green darken-1")
+})
+
+$("#backBtn").click(function () {
+    M.toast({ html: "<span>Tem certeza que deseja abandonar o seu jogo?</span><button onClick='endGame();' class='btn-flat toast-action'>Sim</button><button onClick='M.Toast.dismissAll();' class='btn-flat toast-action'>Não</button>" })
 })

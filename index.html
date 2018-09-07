@@ -5,17 +5,22 @@
     <link href="icons/icons.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
     <title>Torre de Hanoi</title>
 </head>
 
-<body>
+<body oncontextmenu="return false;">
 
     <header>
         <nav class="red darken-3">
             <div class="nav-wrapper">
                 <a href="#" class="brand-logo truncate">Torre de Hanoi</a>
+                <ul class="right">
+                    <li><a id="backBtn" style="display: none" href="#"><i class="material-icons">arrow_back</i></a></li>
+                </ul>
             </div>
         </nav>
+
     </header>
 
     <main>
@@ -34,22 +39,31 @@
         </div>
 
         <div id="gameTela" class="container" style="display: none;">
-            <br><br><br>
+            <br>
             <div class="row">
-                <a href="#" id="subT1" class="col s4 z-depth-3 waves-effect waves-red">
-                    <div id="Tower1" class="black-text card red accent-1 center-align">
+                <div class="col s6 left-align">
+                    <div id="movConter">Movimentos: 0</div>
+                </div>
+                <div class="col s6 right-align">
+                    <div id="tempConter">Tempo</div>
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <a href="#" id="subT1" class="col s4 z-depth-4 waves-effect waves-red">
+                    <div id="Tower1" class="tower black-text card red accent-1 center-align">
                         <!-- Tower 1 -->
                     </div>
                 </a>
 
-                <a href="#" id="subT2" class="col s4 z-depth-3">
-                    <div id="Tower2" class="black-text card red accent-1 center-align">
+                <a href="#" id="subT2" class="col s4 z-depth-4">
+                    <div id="Tower2" class="tower black-text card red accent-1 center-align">
                         <!-- Tower 2 -->
                     </div>
                 </a>
 
-                <a href="#" id="subT3" class="col s4 z-depth-3">
-                    <div id="Tower3" class="black-text card red accent-1 center-align">
+                <a href="#" id="subT3" class="col s4 z-depth-4">
+                    <div id="Tower3" class="tower black-text card red accent-1 center-align">
                         <!-- Tower 3 -->
                     </div>
                 </a>
@@ -58,14 +72,34 @@
 
     </main>
 
-    <footer>
-
+    <footer class="page-footer red darken-4">
+        <div class="footer-copyright">
+            <div class="container">2018 Erik Borella</div>
+        </div>
     </footer>
+
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+    </style>
 
 
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <script type="text/javascript" src="js/game.js"></script>
+    <script type="text/javascript">
+        $(document).ready(() => {
+            $('.sidenav').sidenav();
+            $('.collapsible').collapsible();
+        })
+    </script>
 </body>
 
 </html>
