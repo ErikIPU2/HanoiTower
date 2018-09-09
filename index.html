@@ -16,10 +16,57 @@
             <div class="nav-wrapper">
                 <a href="#" class="brand-logo truncate">Torre de Hanoi</a>
                 <ul class="right">
+                    <li><a href="#" data-target="slide-out" class="sidenav-trigger show-on-medium-and-up hide-on-small-only"><i class="material-icons">settings</i></a></li>
                     <li><a id="backBtn" style="display: none" href="#"><i class="material-icons">arrow_back</i></a></li>
+                </ul>
+                <ul class="left">
+                    <li><a href="#" data-target="slide-out" class="sidenav-trigger hide-on-med-and-up"><i class="material-icons">settings</i></a></li>
                 </ul>
             </div>
         </nav>
+
+        <ul id="slide-out" class="sidenav deep-orange accent-4">
+            <li>
+                <div class="user-view">
+                    <h5>Configurações</h5>
+                </div>
+            </li>
+            <li>
+                <ul class="collapsible red darken-4">
+                    <li>
+                        <div class="collapsible-header"><i class="material-icons">compare_arrows</i>InteligentGameplay <small>(Beta)</small>
+                        </div>
+                        <div class="collapsible-body">
+                            <ul class="collapsible">
+                                <li>
+                                    <div class="collapsible-header"><i class="material-icons">info</i>Informações</div>
+                                    <div class="collapsible-body">
+                                        <span>O <i>HanoiInteligentGameplay</i> é um recurso ainda em desenvolvimento com
+                                            o objetivo de facilitar o modo de se jogar, tentando prever quando uma torre
+                                            selecionada não será mais usada, e fazendo assim a deseleção dela. <br> Atualmente
+                                            as diretivas já funcionais são: <br>
+                                        </span>
+                                        <ol type="I">
+                                            <li>deseleção da torre quando ele se tornar vazia</li>
+                                            <li>deseleção da torre quando o segundo movimento seguido for realizado</li>
+                                        </ol>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="divider"></div>
+                            <div class="switch">
+                                <label class="black-text">
+                                    Desativado
+                                    <input type="checkbox" id="intelGamS">
+                                    <span class="lever"></span>
+                                    Ativado
+                                </label>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
 
     </header>
 

@@ -14,6 +14,8 @@ var s = 0, m = 0;
 //indica qual torre vai estar selecionada
 var selection = -1;
 
+var inteliGam = false;
+
 function startGame() {
     // pega o tamanho da torre
     tam = $("#towerLeng").val();
@@ -48,7 +50,7 @@ function startGame() {
         conterV = setInterval(conter, 1000);
         RENDER([t1, t2, t3]);
 
-        M.toast({ html: `Para resolver essa torre você irá preicar do minimo de ${Math.pow(2, tam) - 1} movimentos` })
+        M.toast({ html: `Para resolver essa torre você irá precisar do minimo de ${Math.pow(2, tam) - 1} movimentos` })
     }
 }
 
@@ -109,23 +111,31 @@ function selec(elem, number) {
 
         if ((Tselec[0] < Tout[0] || !Tout[0]) && Tselec[0]) {
             mover(selection, number);
-            movContG++;
+            if (!inteliGam) {
+                selection = -1;
+                $(`#subT1`).removeClass("green darken-1")
+                $(`#subT2`).removeClass("green darken-1")
+                $(`#subT3`).removeClass("green darken-1")
+            }
+            else {
+                movContG++;
+            }
         }
         else {
             M.toast({ html: "Não podes colocar uma peça maior em cima de uma menor" })
         }
 
+        if (inteliGam) {
 
+            let tIndex = towers[selection].length - 1;
 
+            if (tIndex == -1 || movContG == 2) {
+                $(`#subT${selection + 1}`).removeClass("green darken-1")
+                selection = -1;
+                movContG = 0;
+            }
 
-        let tIndex = towers[selection].length - 1;
-
-        if (tIndex == -1 || movContG == 2) {
-            $(`#subT${selection + 1}`).removeClass("green darken-1")
-            selection = -1;
-            movContG = 0;
         }
-
 
         RENDER([t1, t2, t3])
     }
@@ -190,7 +200,7 @@ function conter() {
 
     $("#tempConter").html(`Tempo: ${m}:${s}`)
     console.log("a");
-    
+
 
 }
 
@@ -243,4 +253,8 @@ $("#gameTela").contextmenu(function () {
 
 $("#backBtn").click(function () {
     M.toast({ html: "<span>Tem certeza que deseja abandonar o seu jogo?</span><button onClick='endGame();' class='btn-flat toast-action'>Sim</button><button onClick='M.Toast.dismissAll();' class='btn-flat toast-action'>Não</button>" })
+})
+
+$("#intelGamS").click(function () {
+    inteliGam = !inteliGam;
 })
